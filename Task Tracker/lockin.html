@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lock-in Session</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background: #111318;
+
+            color: #eeeeee;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================
+        MAIN LAYOUT
+        ========================= */
+
+        .lockin-app {
+            display: grid;
+
+            grid-template-columns:
+                1fr 350px;
+
+            height: 100vh;
+        }
+
+
+        /* =========================
+        TIMER AREA
+        ========================= */
+
+        .timer-area {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+        }
+
+
+        .lockin-label {
+            color: #777b87;
+
+            text-transform: uppercase;
+
+            letter-spacing: 4px;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+
+        #timer {
+            font-size: clamp(
+                80px,
+                13vw,
+                180px
+            );
+
+            font-weight: bold;
+
+            letter-spacing: -5px;
+
+            margin: 0;
+        }
+
+
+        #timer-message {
+            margin-top: 15px;
+
+            color: #888c99;
+
+            font-size: 17px;
+        }
+
+
+        /* =========================
+        PROGRESS BAR
+        ========================= */
+
+        .session-progress {
+            width: min(
+                500px,
+                70%
+            );
+
+            height: 6px;
+
+            background: #242730;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            margin-top: 35px;
+        }
+
+
+        #session-progress-fill {
+            height: 100%;
+
+            width: 0%;
+
+            background: #eeeeee;
+
+            transition: width 1s linear;
+        }
+
+
+        /* =========================
+        TASK SIDEBAR
+        ========================= */
+
+        .task-sidebar {
+            height: 100vh;
+
+            background: #1b1d24;
+
+            border-left: 1px solid #30333d;
+
+            padding: 30px;
+
+            overflow-y: auto;
+        }
+
+
+        .task-sidebar h2 {
+            margin-top: 0;
+
+            font-size: 22px;
+        }
+
+
+        .task-sidebar-subtitle {
+            color: #777b87;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        #focus-task-list {
+            list-style: none;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+
+        .focus-task {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding: 14px;
+
+            margin-bottom: 10px;
+
+            background: #242730;
+
+            border: 1px solid #30333d;
+
+            border-radius: 10px;
+        }
+
+
+        .focus-task input {
+            width: 20px;
+            height: 20px;
+
+            margin-top: 1px;
+
+            cursor: pointer;
+        }
+
+
+        .focus-task-text {
+            flex: 1;
+
+            line-height: 1.4;
+        }
+
+
+        .focus-task.completed
+        .focus-task-text {
+            text-decoration: line-through;
+
+            color: #666a75;
+        }
+
+
+        .focus-priority {
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            color: #888c99;
+        }
+
+
+        /* =========================
+        FINISHED SCREEN
+        ========================= */
+
+        #finished-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(
+                17,
+                19,
+                24,
+                0.97
+            );
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            z-index: 100;
+        }
+
+
+        #finished-overlay.show {
+            display: flex;
+        }
+
+
+        .finished-content h1 {
+            font-size: 50px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .finished-content p {
+            color: #888c99;
+
+            font-size: 18px;
+        }
+
+
+        .finished-content button {
+            margin-top: 25px;
+
+            padding: 14px 25px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #eeeeee;
+
+            color: #111318;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+        MOBILE
+        ========================= */
+
+        @media (
+            max-width: 800px
+        ) {
+
+            body {
+                overflow: auto;
+            }
+
+
+            .lockin-app {
+                grid-template-columns:
+                    1fr;
+
+                height: auto;
+
+                min-height: 100vh;
+            }
+
+
+            .timer-area {
+                min-height: 60vh;
+            }
+
+
+            .task-sidebar {
+                height: auto;
+
+                min-height: 40vh;
+
+                border-left: none;
+
+                border-top:
+                    1px solid #30333d;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="lockin-app">
+
+
+        <!-- =========================
+            TIMER
+        ========================= -->
+
+        <section class="timer-area">
+
+            <div class="lockin-label">
+                Lock-in Session
+            </div>
+
+            <div id="timer">
+                00:00
+            </div>
+
+            <p id="timer-message">
+                Stay focused.
+            </p>
+
+            <div class="session-progress">
+
+                <div
+                    id="session-progress-fill"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+            TASKS
+        ========================= -->
+
+        <aside class="task-sidebar">
+
+            <h2>
+                Today's Tasks
+            </h2>
+
+            <p class="task-sidebar-subtitle">
+                No distractions. Just the work.
+            </p>
+
+            <ul id="focus-task-list"></ul>
+
+        </aside>
+
+
+    </main>
+
+
+    <!-- =========================
+        FINISHED
+    ========================= -->
+
+    <div id="finished-overlay">
+
+        <div class="finished-content">
+
+            <h1>
+                Session Complete. 💪
+            </h1>
+
+            <p>
+                The crow acknowledges your effort.
+            </p>
+
+            <button
+                id="close-session"
+                type="button"
+            >
+                Finish Session
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // =========================
+        // SESSION DATA
+        // =========================
+
+        const durationMinutes =
+            Number(
+                localStorage.getItem(
+                    "lockinDuration"
+                )
+            ) || 25;
+
+
+        const totalSeconds =
+            durationMinutes * 60;
+
+
+        let remainingSeconds =
+            totalSeconds;
+
+
+        // =========================
+        // ELEMENTS
+        // =========================
+
+        const timerDisplay =
+            document.getElementById(
+                "timer"
+            );
+
+
+        const progressFill =
+            document.getElementById(
+                "session-progress-fill"
+            );
+
+
+        const focusTaskList =
+            document.getElementById(
+                "focus-task-list"
+            );
+
+
+        const finishedOverlay =
+            document.getElementById(
+                "finished-overlay"
+            );
+
+
+        const closeSession =
+            document.getElementById(
+                "close-session"
+            );
+
+
+        // =========================
+        // TASKS
+        // =========================
+
+        let tasks = [];
+
+
+        try {
+
+            const savedTasks =
+                JSON.parse(
+                    localStorage.getItem(
+                        "crowTasks"
+                    )
+                );
+
+
+            if (
+                Array.isArray(
+                    savedTasks
+                )
+            ) {
+
+                tasks = savedTasks;
+
+            }
+
+        }
+
+        catch (error) {
+
+            tasks = [];
+
+        }
+
+
+        // =========================
+        // SAVE TASKS
+        // =========================
+
+        function saveTasks() {
+
+            localStorage.setItem(
+                "crowTasks",
+                JSON.stringify(tasks)
+            );
+
+        }
+
+
+        // =========================
+        // RENDER TASKS
+        // =========================
+
+        function renderTasks() {
+
+            focusTaskList.innerHTML = "";
+
+
+            if (tasks.length === 0) {
+
+                const message =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                message.textContent =
+                    "No tasks yet.";
+
+
+                message.style.color =
+                    "#777b87";
+
+
+                focusTaskList.appendChild(
+                    message
+                );
+
+
+                return;
+
+            }
+
+
+            tasks.forEach(
+                function (task) {
+
+
+                    const li =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    li.className =
+                        "focus-task";
+
+
+                    if (task.completed) {
+
+                        li.classList.add(
+                            "completed"
+                        );
+
+                    }
+
+
+                    // Checkbox
+
+                    const checkbox =
+                        document.createElement(
+                            "input"
+                        );
+
+
+                    checkbox.type =
+                        "checkbox";
+
+
+                    checkbox.checked =
+                        task.completed;
+
+
+                    checkbox.addEventListener(
+                        "change",
+                        function () {
+
+                            task.completed =
+                                checkbox.checked;
+
+
+                            saveTasks();
+
+                            renderTasks();
+
+                        }
+                    );
+
+
+                    // Text container
+
+                    const textArea =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    textArea.style.flex =
+                        "1";
+
+
+                    // Task text
+
+                    const text =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    text.className =
+                        "focus-task-text";
+
+
+                    text.textContent =
+                        task.text;
+
+
+                    // Priority
+
+                    const priority =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    priority.className =
+                        "focus-priority";
+
+
+                    priority.textContent =
+                        task.priority ||
+                        "medium";
+
+
+                    textArea.appendChild(
+                        text
+                    );
+
+
+                    textArea.appendChild(
+                        priority
+                    );
+
+
+                    li.appendChild(
+                        checkbox
+                    );
+
+
+                    li.appendChild(
+                        textArea
+                    );
+
+
+                    focusTaskList.appendChild(
+                        li
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =========================
+        // FORMAT TIME
+        // =========================
+
+        function formatTime(seconds) {
+
+            const minutes =
+                Math.floor(
+                    seconds / 60
+                );
+
+
+            const secs =
+                seconds % 60;
+
+
+            return (
+                String(minutes)
+                    .padStart(2, "0")
+                +
+                ":"
+                +
+                String(secs)
+                    .padStart(2, "0")
+            );
+
+        }
+
+
+        // =========================
+        // UPDATE TIMER
+        // =========================
+
+        function updateTimer() {
+
+            timerDisplay.textContent =
+                formatTime(
+                    remainingSeconds
+                );
+
+
+            const completed =
+                totalSeconds -
+                remainingSeconds;
+
+
+            const progress =
+                (
+                    completed /
+                    totalSeconds
+                ) * 100;
+
+
+            progressFill.style.width =
+                progress + "%";
+
+        }
+
+
+        // =========================
+        // TIMER
+        // =========================
+
+        const sessionTimer =
+            setInterval(
+                function () {
+
+
+                    remainingSeconds--;
+
+
+                    updateTimer();
+
+
+                    if (
+                        remainingSeconds <= 0
+                    ) {
+
+                        clearInterval(
+                            sessionTimer
+                        );
+
+
+                        remainingSeconds = 0;
+
+                        updateTimer();
+
+
+                        finishedOverlay.classList.add(
+                            "show"
+                        );
+
+                    }
+
+                },
+                1000
+            );
+
+
+        // =========================
+        // CLOSE SESSION
+        // =========================
+
+        closeSession.addEventListener(
+            "click",
+            function () {
+
+                window.close();
+
+            }
+        );
+
+
+        // =========================
+        // START
+        // =========================
+
+        renderTasks();
+
+        updateTimer();
+
+    </script>
+
+
+</body>
+
+</html>
