@@ -1,93 +1,132 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!-- Character encoding -->
   <meta charset="UTF-8">
+
+  <!-- Adjust website scaling for different screen sizes -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Browser tab title -->
   <title>Crow's Task Tracker</title>
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Token Hud -->
+  <!-- TOKEN HUD -->
+
+  <!-- Display the user's current coins and store button -->
   <div id="token-hud">
     <div id="token-display">
       🪙 <span id="token-count">0</span>
     </div>
+
+    <!-- Open the Crow Store -->
     <button id="store-button" type="button">Store</button>
   </div>
 
-  <!-- Main Dashboard -->
+
+  <!-- MAIN DASHBOARD -->
+
+  <!-- Main application container -->
   <main class="app">
 
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
+
+    <!-- Sidebar containing navigation and workspace information -->
     <aside class="dashboard-sidebar" aria-label="Dashboard navigation">
 
-      <!-- Website Name -->
+      <!-- Website branding -->
       <div class="dashboard-brand">
         <span class="brand-mark">✦</span>
         <span>Corvus</span>
       </div>
 
-      <!-- Navigation System -->
+      <!-- NAVIGATION LINKS -->
+
+      <!-- Links for switching between dashboard pages -->
       <nav class="dashboard-nav">
         <a class="active" href="#dashboard-home">
           ◈ <span>Dashboard</span>
         </a>
+
         <a href="#tasks-panel">
           ☑ <span>My Tasks</span>
         </a>
+
         <a href="#weekly-report-panel">
           ◉ <span>Weekly Progress</span>
         </a>
+
         <a href="#calendar-panel">
           ▦ <span>Calendar</span>
         </a>
+
         <a href="#dates-panel">
           ◇ <span>Important Dates</span>
         </a>
+
         <a href="#classes-panel">
           ✿ <span>Classes</span>
         </a>
       </nav>
 
-      <!-- Sidebar Workspace Placeholder -->
+      <!-- WORKSPACE LINKS -->
+
+      <!-- Workspace section heading -->
       <div class="sidebar-subtitle">WORKSPACE</div>
 
+      <!-- Classes workspace -->
       <div class="workspace-link">
         <span class="workspace-dot pink"></span>
         Classes
       </div>
 
+      <!-- Productivity workspace -->
       <div class="workspace-link">
         <span class="workspace-dot green"></span>
         Productivity
       </div>
 
-      <!-- Bottom avatar -->
+      <!-- SIDEBAR PROFILE -->
+
+      <!-- Profile section at the bottom of the sidebar -->
       <div class="sidebar-bottom">
         <span class="avatar">🐦‍⬛</span>
+
         <div>
           <strong>Corvus</strong>
           <small>The crow is watching</small>
         </div>
       </div>
-
     </aside>
 
-    <!-- Dashboard Content -->
+
+    <!-- DASHBOARD CONTENT -->
+
+    <!-- Container for the website's main sections -->
     <div class="dashboard-content">
 
-      <!-- Top bar -->
+      <!-- TOP BAR -->
+
+      <!-- Search bar and theme controls -->
       <div class="dashboard-topbar">
 
-        <!-- Search input -->
+        <!-- GLOBAL SEARCH -->
+
+        <!-- Search form for tasks, dates, and classes -->
         <div class="dashboard-search">
           <form
             id="dashboard-search-form"
             class="topbar-search"
             role="search"
           >
+            <!-- Search input -->
             <input
               id="dashboard-search-input"
               type="search"
@@ -96,8 +135,9 @@
               aria-label="Search Corvus"
               aria-controls="dashboard-search-results"
               aria-expanded="false"
-            />
+            >
 
+            <!-- Submit search button -->
             <button
               id="dashboard-search-button"
               type="submit"
@@ -107,7 +147,7 @@
             </button>
           </form>
 
-          <!-- Populated automatically by script.js -->
+          <!-- Search suggestions inserted by JavaScript -->
           <div
             id="dashboard-search-results"
             class="dashboard-search-results"
@@ -115,61 +155,85 @@
             hidden
           ></div>
         </div>
-    <div class="topbar-right">
 
-    <!-- Small Catchphrase -->
-    <span>✦ Stay focused</span>
+        <!-- THEME CONTROLS -->
 
-    <!-- Light & Dark Mode -->
-    <button
-        id="theme-toggle"
-        class="theme-toggle"
-        type="button"
-        aria-label="Switch to dark mode"
-        aria-pressed="false"
-        title="Toggle light and dark mode"
-    >
-        <span id="theme-icon" aria-hidden="true">🌙</span>
-        <span id="theme-label">Dark Mode</span>
-    </button>
+        <!-- Right side of the top bar -->
+        <div class="topbar-right">
 
-    </div>
+          <!-- Small motivational catchphrase -->
+          <span>✦ Stay focused</span>
 
+          <!-- Button for switching between light and dark mode -->
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+            title="Toggle light and dark mode"
+          >
+            <!-- Theme icon updated by JavaScript -->
+            <span id="theme-icon" aria-hidden="true">🌙</span>
+
+            <!-- Theme label updated by JavaScript -->
+            <span id="theme-label">Dark Mode</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Greeting -->
-      <!-- Dashboard Card -->
+
+      <!-- GREETING CARD -->
+
+      <!-- Main dashboard greeting and current date -->
       <section class="crow-section" id="dashboard-home">
 
+        <!-- Greeting icon -->
         <div class="crow">📑</div>
 
+        <!-- Greeting message -->
         <div class="crow-speech">
+
+          <!-- Heading updated by JavaScript -->
           <h2 id="crow-name">Task Manager</h2>
+
+          <!-- Motivational message -->
           <p id="crow-message">
             Time to get on that grind 🔥
           </p>
+
+          <!-- Current date inserted by JavaScript -->
           <p id="date" class="dashboard-current-date"></p>
         </div>
-
       </section>
 
-      <!-- Weekly Progress Bar -->
+
+      <!-- WEEKLY PROGRESS BAR -->
+
+      <!-- Small progress summary on the dashboard -->
       <section class="progress-section">
 
+        <!-- Progress label and percentage -->
         <div class="progress-text">
           <span>Weekly Progress</span>
           <span id="progress-percent">0%</span>
         </div>
 
+        <!-- Progress bar background -->
         <div class="progress-bar">
+
+          <!-- Progress bar fill updated by JavaScript -->
           <div id="progress-fill"></div>
         </div>
-
       </section>
 
-      <!-- Add Task -->
+
+      <!-- ADD TASK -->
+
+      <!-- Quick task entry section -->
       <section class="add-task">
 
+        <!-- Input for creating a new task -->
         <input
           type="text"
           id="task-input"
@@ -177,50 +241,61 @@
           autocomplete="off"
         >
 
-        <!-- Add Task Button -->
+        <!-- Open the task details modal -->
         <button id="add-task-button" type="button">
           Add Task
         </button>
-
       </section>
 
-      <!-- Task List -->
+
+      <!-- TASK LIST -->
+
+      <!-- Main section containing saved tasks -->
       <section class="task-section" id="tasks-panel">
 
+        <!-- Task section title and counter -->
         <div class="section-heading">
           <h2>Tasks</h2>
           <span id="task-count">0 tasks</span>
         </div>
 
+        <!-- Saved task cards inserted by JavaScript -->
         <ul id="task-list"></ul>
 
-        <p
-          id="empty-task-message"
-          class="empty-message"
-        >
+        <!-- Message shown when there are no tasks -->
+        <p id="empty-task-message" class="empty-message">
           No tasks yet. Suspicious.
         </p>
-
       </section>
 
-      <!-- Weekly Progress Report -->
-      <section 
+
+      <!-- WEEKLY PROGRESS REPORT -->
+
+      <!-- Full weekly report, hidden until its page is opened -->
+      <section
         class="weekly-report-page"
         id="weekly-report-panel"
         aria-labelledby="weekly-report-title"
         hidden
       >
-        <!-- Report header -->
+
+        <!-- WEEKLY REPORT HEADER -->
+
+        <!-- Navy banner containing the report title and week -->
         <header class="weekly-report-hero">
+
+          <!-- Report heading and decorative icon -->
           <div class="weekly-report-hero-main">
+
+            <!-- Report icon -->
             <span
               class="weekly-report-hero-icon"
               aria-hidden="true"
             >
-              ▦ 
+              ▦
             </span>
 
-            <!-- Weekly Report Title-->
+            <!-- Report title and description -->
             <div>
               <h1 id="weekly-report-title">
                 Weekly Progress Report
@@ -230,34 +305,41 @@
             </div>
           </div>
 
-          <!-- Weekly report week time span-->
+          <!-- Reporting week date range -->
           <div class="weekly-report-week">
             <span>Week of</span>
             <strong id="weekly-report-range">—</strong>
           </div>
-
         </header>
 
-        <!-- Two-column Report Layout -->
+
+        <!-- WEEKLY REPORT GRID -->
+
+        <!-- Two-column layout for report statistics -->
         <div class="weekly-report-grid">
 
-          <!-- Left Column -->
+          <!-- LEFT REPORT COLUMN -->
+
+          <!-- Contains overall progress and category progress -->
           <div class="weekly-report-column">
 
-            <!-- Overall Progress -->
-            <article
-              class="weekly-report-card weekly-overall-card"
-            >
+            <!-- OVERALL PROGRESS -->
 
+            <!-- Card showing total weekly completion -->
+            <article class="weekly-report-card weekly-overall-card">
+
+              <!-- Overall progress heading -->
               <h2>◎ &nbsp; Overall Progress</h2>
 
+              <!-- Completion summary updated by JavaScript -->
               <p id="weekly-report-summary">
                 You completed 0 out of 0 tasks this week.
               </p>
 
+              <!-- Donut chart and completion legend -->
               <div class="weekly-overall-layout">
 
-                <!--Circular Progress Chart-->
+                <!-- Circular completion chart -->
                 <div
                   class="weekly-donut"
                   id="weekly-report-donut"
@@ -265,51 +347,48 @@
                   aria-label="0% completed"
                   style="--weekly-percent: 0"
                 >
+                  <!-- Percentage text inside the chart -->
                   <div class="weekly-donut-center">
-                    <strong id="weekly-report-percent">
-                      0%
-                    </strong>
+                    <strong id="weekly-report-percent">0%</strong>
                     <span>complete</span>
                   </div>
-
                 </div>
 
-                <!-- Task status legend-->
+                <!-- COMPLETION LEGEND -->
+
+                <!-- Completed and incomplete task counters -->
                 <div class="weekly-status-legend">
+
+                  <!-- Completed task count -->
                   <div>
-                    <span
-                      class="weekly-legend-dot completed"
-                    ></span>
+                    <span class="weekly-legend-dot completed"></span>
                     <span>Completed</span>
-                    <strong id="weekly-report-completed">
-                      0
-                    </strong>
+                    <strong id="weekly-report-completed">0</strong>
                   </div>
 
+                  <!-- Incomplete task count -->
                   <div>
-                    <span
-                      class="weekly-legend-dot not-started"
-                    ></span>
+                    <span class="weekly-legend-dot not-started"></span>
                     <span>Incomplete</span>
-                    <strong id="weekly-report-not-started">
-                      0
-                    </strong>
+                    <strong id="weekly-report-not-started">0</strong>
                   </div>
-                </div>  
+                </div>
               </div>
             </article>
 
-            <!--Category Progress-->
-            <article
-              class="weekly-report-card weekly-categories-card"
-            >
+
+            <!-- CATEGORY PROGRESS -->
+
+            <!-- Card showing completion progress by subject -->
+            <article class="weekly-report-card weekly-categories-card">
+
+              <!-- Category progress heading -->
               <h2>▥ &nbsp; Progress by Category</h2>
 
-              <p>
-                How you did across different areas this week.
-              </p>
+              <!-- Category progress description -->
+              <p>How you did across different areas this week.</p>
 
-              <!--JS inserts category progress bars here-->
+              <!-- Category progress bars inserted by JavaScript -->
               <div
                 id="weekly-report-categories"
                 class="weekly-category-list"
@@ -320,19 +399,28 @@
               </div>
             </article>
           </div>
-          
-          <!--Right Column-->
+
+
+          <!-- RIGHT REPORT COLUMN -->
+
+          <!-- Contains the weekly task table and insights -->
           <div>
 
-            <!--Task Status Table-->
-            <article
-              class="weekly-report-card weekly-tasks-card"
-            >
+            <!-- TASKS THIS WEEK -->
+
+            <!-- Card displaying tasks relevant to the current week -->
+            <article class="weekly-report-card weekly-tasks-card">
+
+              <!-- Task table heading -->
               <h2>☷ &nbsp; Tasks This Week</h2>
 
+              <!-- Scrollable table container -->
               <div class="weekly-table-wrap">
+
+                <!-- Table containing task name, status, and notes -->
                 <table class="weekly-tasks-table">
 
+                  <!-- Table column headings -->
                   <thead>
                     <tr>
                       <th scope="col">Task</th>
@@ -341,58 +429,63 @@
                     </tr>
                   </thead>
 
-                  <!--JS inserts actual tasks here-->
+                  <!-- Task rows inserted by JavaScript -->
                   <tbody id="weekly-report-task-rows">
 
+                    <!-- Default message before tasks are rendered -->
                     <tr>
-                      <td
-                        colspan="3"
-                        class="weekly-report-empty"
-                      >
+                      <td colspan="3" class="weekly-report-empty">
                         No tasks to show yet.
                       </td>
                     </tr>
-
                   </tbody>
-
                 </table>
-
               </div>
-
             </article>
 
-            <!--Highlights and challenges-->
-            <article
-              class="weekly-report-card weekly-highlights-card"
-            >
+
+            <!-- HIGHLIGHTS AND CHALLENGES -->
+
+            <!-- Card showing generated weekly insights -->
+            <article class="weekly-report-card weekly-highlights-card">
+
+              <!-- Insights heading -->
               <h2>★ &nbsp; Highlights &amp; Challenges</h2>
 
+              <!-- Two-column layout for achievements and challenges -->
               <div class="weekly-highlights-grid">
 
+                <!-- Positive weekly highlights -->
                 <div>
                   <h3>✓ &nbsp; What went well</h3>
 
+                  <!-- Highlights inserted by JavaScript -->
                   <ul id="weekly-report-highlights"></ul>
                 </div>
 
+                <!-- Areas that need improvement -->
                 <div>
                   <h3>! &nbsp; Challenges</h3>
 
+                  <!-- Challenges inserted by JavaScript -->
                   <ul id="weekly-report-challenges"></ul>
                 </div>
               </div>
             </article>
           </div>
         </div>
-        
-        <!--New Week's Goals-->
-        <article
-          class="weekly-report-card weekly-goals-card"
-        >
+
+
+        <!-- NEXT WEEK'S GOALS -->
+
+        <!-- Card showing upcoming tasks as next week's goals -->
+        <article class="weekly-report-card weekly-goals-card">
+
+          <!-- Goals heading and list -->
           <div>
             <h2>◎ &nbsp; Next Week's Goals</h2>
 
-            <!--JS inserts upcoming goals here-->
+            <!-- Upcoming goals inserted by JavaScript -->
             <ol id="weekly-report-goals">
               <li>Set a goal for the coming week.</li>
             </ol>
@@ -400,25 +493,32 @@
         </article>
       </section>
 
-      <!-- IMPORTANT DATES -->
-      <section
-        class="important-dates-section"
-        id="dates-panel"
-      >
 
+      <!-- IMPORTANT DATES -->
+
+      <!-- Section for tracking exams, events, and deadlines -->
+      <section class="important-dates-section" id="dates-panel">
+
+        <!-- Important Dates heading and count -->
         <div class="section-heading">
           <div>
             <h2>Important Dates</h2>
+
             <p>
               Deadlines, exams, events, and reminders.
             </p>
           </div>
 
+          <!-- Number of saved important dates -->
           <span id="important-date-count">0 dates</span>
         </div>
 
+        <!-- IMPORTANT DATE INPUT -->
+
+        <!-- Input and button for adding an important date -->
         <div class="important-date-input-row">
 
+          <!-- Important date name input -->
           <input
             type="text"
             id="important-date-input"
@@ -426,15 +526,13 @@
             autocomplete="off"
           >
 
-          <button
-            id="add-important-date-button"
-            type="button"
-          >
+          <!-- Open Important Date details modal -->
+          <button id="add-important-date-button" type="button">
             Add Date
           </button>
-
         </div>
 
+        <!-- Message shown when there are no important dates -->
         <div
           id="empty-important-date-message"
           class="empty-important-date-message"
@@ -442,24 +540,33 @@
           No important dates yet.
         </div>
 
+        <!-- Saved important dates inserted by JavaScript -->
         <ul id="important-date-list"></ul>
-
       </section>
 
+
       <!-- CLASSES -->
+
+      <!-- Section for adding and managing classes -->
       <section class="classes-section" id="classes-panel">
 
+        <!-- Classes heading and description -->
         <div class="section-heading">
           <div>
             <h2>Classes</h2>
+
             <p>
               Add weekly or one-time classes to your calendar.
             </p>
           </div>
         </div>
 
+        <!-- CLASS INPUT -->
+
+        <!-- Input and button for adding a class -->
         <div class="class-input-row">
 
+          <!-- Class name input -->
           <input
             type="text"
             id="class-input"
@@ -467,19 +574,27 @@
             autocomplete="off"
           >
 
+          <!-- Open Class details modal -->
           <button id="add-class-button" type="button">
             Add Class
           </button>
-
         </div>
 
+        <!-- Saved class list is created by JavaScript -->
       </section>
 
+
       <!-- CALENDAR -->
+
+      <!-- Calendar containing tasks, classes, and important dates -->
       <section class="calendar-section" id="calendar-panel">
 
+        <!-- CALENDAR HEADER -->
+
+        <!-- Month heading and navigation controls -->
         <div class="calendar-header">
 
+          <!-- Move to the previous month -->
           <button
             id="previous-month"
             class="calendar-nav-button"
@@ -489,8 +604,10 @@
             ←
           </button>
 
+          <!-- Current month and year updated by JavaScript -->
           <h2 id="calendar-month">Month</h2>
 
+          <!-- Move to the next month -->
           <button
             id="next-month"
             class="calendar-nav-button"
@@ -499,9 +616,11 @@
           >
             →
           </button>
-
         </div>
 
+        <!-- CALENDAR WEEKDAYS -->
+
+        <!-- Days of the week displayed above the calendar -->
         <div class="calendar-weekdays">
           <span>Sun</span>
           <span>Mon</span>
@@ -512,13 +631,16 @@
           <span>Sat</span>
         </div>
 
+        <!-- Calendar day cells inserted by JavaScript -->
         <div id="calendar-grid"></div>
-
       </section>
     </div>
   </main>
 
+
   <!-- TASK MODAL -->
+
+  <!-- Dialog for creating and editing tasks -->
   <div
     id="task-modal"
     class="modal"
@@ -527,8 +649,10 @@
     aria-labelledby="task-modal-title"
     aria-hidden="true"
   >
+    <!-- Task modal content -->
     <div class="modal-card task-modal-card">
 
+      <!-- Close Task modal -->
       <button
         id="close-task-modal"
         class="modal-close"
@@ -538,14 +662,20 @@
         ✕
       </button>
 
+      <!-- Task modal title -->
       <h2 id="task-modal-title">Task Details</h2>
 
+      <!-- Task modal description -->
       <p class="modal-subtitle">
         The crow requires more information.
       </p>
 
+      <!-- TASK NAME -->
+
+      <!-- Input for the task's name -->
       <div class="form-group">
         <label for="modal-task-name">Task</label>
+
         <input
           id="modal-task-name"
           type="text"
@@ -553,10 +683,12 @@
         >
       </div>
 
+      <!-- TASK CATEGORY -->
+
+      <!-- Input for the task's subject or category -->
       <div class="form-group">
-        <label for="task-category">
-          Subject / Category
-        </label>
+        <label for="task-category">Subject / Category</label>
+
         <input
           id="task-category"
           type="text"
@@ -565,30 +697,41 @@
         >
       </div>
 
+      <!-- TASK DUE DATE -->
+
+      <!-- Date picker for selecting the task deadline -->
       <div class="form-group">
         <label for="task-due-date">Due Date</label>
+
         <input id="task-due-date" type="date">
       </div>
 
+      <!-- TASK PRIORITY GUIDE -->
+
+      <!-- Explain how task priority is automatically calculated -->
       <div class="priority-guide">
         <p>Priority is calculated automatically:</p>
 
+        <!-- High priority deadline -->
         <div class="priority-guide-row">
           <span class="priority high">HIGH</span>
           <span>Due within 2 days</span>
         </div>
 
+        <!-- Medium priority deadline -->
         <div class="priority-guide-row">
           <span class="priority medium">MEDIUM</span>
           <span>Due within 3–7 days</span>
         </div>
 
+        <!-- Low priority deadline -->
         <div class="priority-guide-row">
           <span class="priority low">LOW</span>
           <span>Due in more than 7 days</span>
         </div>
       </div>
 
+      <!-- Save the new or edited task -->
       <button
         id="confirm-task-button"
         class="primary-button full-button"
@@ -596,18 +739,22 @@
       >
         Add Task
       </button>
-
     </div>
   </div>
 
+
   <!-- IMPORTANT DATE MODAL -->
+
+  <!-- Dialog for creating and editing important dates -->
   <div
     id="important-date-modal"
     class="modal"
     aria-hidden="true"
   >
+    <!-- Important Date modal content -->
     <div class="modal-card task-modal-card">
 
+      <!-- Close Important Date modal -->
       <button
         id="close-important-date-modal"
         class="modal-close"
@@ -617,12 +764,17 @@
         ✕
       </button>
 
+      <!-- Important Date modal title -->
       <h2>Important Date Details</h2>
 
+      <!-- Modal description -->
       <p class="modal-subtitle">
         The crow requires more information.
       </p>
 
+      <!-- IMPORTANT DATE NAME -->
+
+      <!-- Input for the event or deadline name -->
       <div class="form-group">
         <label for="modal-important-date-name">
           Important Date
@@ -635,6 +787,9 @@
         >
       </div>
 
+      <!-- IMPORTANT DATE CATEGORY -->
+
+      <!-- Input for the event's subject or category -->
       <div class="form-group">
         <label for="important-date-category">
           Subject / Category
@@ -648,12 +803,16 @@
         >
       </div>
 
-      <div class="form-group">
+      <!-- IMPORTANT DATE TYPE -->
 
+      <!-- Choose between School / Work and Personal -->
+      <div class="form-group">
         <label>Important Date Type</label>
 
+        <!-- Important Date radio button options -->
         <div class="important-date-type-options">
 
+          <!-- School or Work type -->
           <label class="important-date-type-option">
             <input
               type="radio"
@@ -670,6 +829,7 @@
             </span>
           </label>
 
+          <!-- Personal type -->
           <label class="important-date-type-option">
             <input
               type="radio"
@@ -684,15 +844,19 @@
               </small>
             </span>
           </label>
-
         </div>
       </div>
 
+      <!-- IMPORTANT DATE CALENDAR DATE -->
+
+      <!-- Date picker for the event or deadline -->
       <div class="form-group">
         <label for="important-date-date">Date</label>
+
         <input id="important-date-date" type="date">
       </div>
 
+      <!-- Save the important date -->
       <button
         id="confirm-important-date-button"
         class="primary-button full-button"
@@ -700,18 +864,22 @@
       >
         Add Important Date
       </button>
-
     </div>
   </div>
 
+
   <!-- CLASS MODAL -->
+
+  <!-- Dialog for creating and editing classes -->
   <div
     id="class-modal"
     class="modal"
     aria-hidden="true"
   >
+    <!-- Class modal content -->
     <div class="modal-card task-modal-card">
 
+      <!-- Close Class modal -->
       <button
         id="close-class-modal"
         class="modal-close"
@@ -721,12 +889,17 @@
         ✕
       </button>
 
+      <!-- Class modal title -->
       <h2>Class Details</h2>
 
+      <!-- Class modal description -->
       <p class="modal-subtitle">
         Add this class to your calendar.
       </p>
 
+      <!-- CLASS NAME -->
+
+      <!-- Input for the class name -->
       <div class="form-group">
         <label for="modal-class-name">Class</label>
 
@@ -737,12 +910,16 @@
         >
       </div>
 
-      <div class="form-group">
+      <!-- CLASS SCHEDULE TYPE -->
 
+      <!-- Choose between recurring and one-time classes -->
+      <div class="form-group">
         <label>Schedule</label>
 
+        <!-- Class repeat options -->
         <div class="class-repeat-options">
 
+          <!-- Weekly class option -->
           <label class="class-repeat-option">
             <input
               type="radio"
@@ -757,6 +934,7 @@
             </span>
           </label>
 
+          <!-- One-time class option -->
           <label class="class-repeat-option">
             <input
               type="radio"
@@ -769,18 +947,18 @@
               <small>Only show on one date</small>
             </span>
           </label>
-
         </div>
       </div>
 
-      <div
-        id="weekly-class-options"
-        class="form-group"
-      >
+      <!-- WEEKLY CLASS OPTIONS -->
+
+      <!-- Weekday selector for recurring classes -->
+      <div id="weekly-class-options" class="form-group">
         <label for="class-weekday">
           Day of the Week
         </label>
 
+        <!-- Select the weekday the class repeats -->
         <select id="class-weekday">
           <option value="1">Monday</option>
           <option value="2">Tuesday</option>
@@ -792,14 +970,19 @@
         </select>
       </div>
 
+      <!-- ONE-TIME CLASS OPTIONS -->
+
+      <!-- Date picker shown only for one-time classes -->
       <div
         id="one-time-class-options"
         class="form-group hidden"
       >
         <label for="class-date">Date</label>
+
         <input id="class-date" type="date">
       </div>
 
+      <!-- Save the new or edited class -->
       <button
         id="confirm-class-button"
         class="primary-button full-button"
@@ -807,11 +990,13 @@
       >
         Add Class
       </button>
-
     </div>
   </div>
 
-  <!-- DAILY TASKS BUTTON -->
+
+  <!-- FLOATING DAILY TASKS BUTTON -->
+
+  <!-- Open or close the floating Today's Tasks panel -->
   <button
     id="daily-tasks-button"
     type="button"
@@ -820,19 +1005,27 @@
     Today's Tasks 📋
   </button>
 
-  <!-- LOCK-IN BUTTON -->
+
+  <!-- FLOATING LOCK-IN BUTTON -->
+
+  <!-- Open the focus session setup modal -->
   <button id="lockin-button" type="button">
     Lock-in Session 💪
   </button>
 
+
   <!-- LOCK-IN MODAL -->
+
+  <!-- Dialog for selecting a focus duration -->
   <div
     id="lockin-modal"
     class="modal"
     aria-hidden="true"
   >
+    <!-- Lock-in modal content -->
     <div class="modal-card lockin-modal-card">
 
+      <!-- Close Lock-in modal -->
       <button
         id="close-lockin-modal"
         class="modal-close"
@@ -842,65 +1035,53 @@
         ✕
       </button>
 
+      <!-- Lock-in modal heading -->
       <h2>Lock-in Session 💪</h2>
 
-      <p
-        id="lockin-description"
-        class="modal-subtitle"
-      >
+      <!-- Instructions updated during focus setup -->
+      <p id="lockin-description" class="modal-subtitle">
         How long are we locking in?
       </p>
 
       <!-- PRESET DURATIONS -->
+
+      <!-- Buttons for selecting a preset session length -->
       <div id="lockin-time-options">
 
-        <button
-          class="lockin-time"
-          data-minutes="25"
-          type="button"
-        >
+        <!-- 25-minute focus session -->
+        <button class="lockin-time" data-minutes="25" type="button">
           25 min
         </button>
 
-        <button
-          class="lockin-time"
-          data-minutes="45"
-          type="button"
-        >
+        <!-- 45-minute focus session -->
+        <button class="lockin-time" data-minutes="45" type="button">
           45 min
         </button>
 
-        <button
-          class="lockin-time"
-          data-minutes="60"
-          type="button"
-        >
+        <!-- 60-minute focus session -->
+        <button class="lockin-time" data-minutes="60" type="button">
           1 hour
         </button>
 
-        <button
-          class="lockin-time"
-          data-minutes="90"
-          type="button"
-        >
+        <!-- 90-minute focus session -->
+        <button class="lockin-time" data-minutes="90" type="button">
           90 min
         </button>
 
-        <button
-          id="custom-time-button"
-          type="button"
-        >
+        <!-- Switch to custom duration input -->
+        <button id="custom-time-button" type="button">
           Custom
         </button>
-
       </div>
 
       <!-- CUSTOM DURATION -->
+
+      <!-- Hidden controls for entering a custom focus length -->
       <div
         id="custom-time-section"
         class="hidden custom-time-section"
       >
-
+        <!-- Custom focus duration in minutes -->
         <input
           id="custom-time-input"
           type="number"
@@ -910,28 +1091,29 @@
           aria-label="Custom duration in minutes"
         >
 
-        <button
-          id="start-custom-time"
-          type="button"
-        >
+        <!-- Confirm the custom duration -->
+        <button id="start-custom-time" type="button">
           Continue
         </button>
-
       </div>
 
-      <!-- ROOM-CLEAR CONFIRMATION -->
+      <!-- ROOM CLEAR CONFIRMATION -->
+
+      <!-- Final confirmation before starting the focus session -->
       <div
         id="room-clear-section"
         class="lockin-step hidden"
       >
-
+        <!-- Confirmation heading -->
         <h3>Ready to Lock In?</h3>
 
+        <!-- Reminder to remove distractions -->
         <p class="room-clear-description">
           Have you removed all distracting devices
           from your room?
         </p>
 
+        <!-- Start the focus session -->
         <button
           id="confirm-room-clear"
           type="button"
@@ -940,6 +1122,7 @@
           Yes, All Devices Are Removed
         </button>
 
+        <!-- Honor system warning -->
         <p class="room-clear-warning">
           ⚠️ This is an honor system. If you choose
           to lie about having a distracting device
@@ -947,89 +1130,107 @@
           responsible for any distractions you
           allow during your Lock-in Session.
         </p>
-
       </div>
-
     </div>
   </div>
 
 
-  <!-- =====================================
-       ANIMATED CROW
-       SEVEN SEPARATE IMAGE LAYERS
-  ====================================== -->
+  <!-- ANIMATED CROW -->
+
+  <!-- Floating crow character and speech bubble -->
   <div id="crow-container">
 
-    <!-- Existing speech bubble -->
+    <!-- Speech bubble controlled by JavaScript -->
     <div id="crow-popup-speech">
       Welcome.
     </div>
 
-    <!-- Layered crow character -->
+    <!-- CROW CHARACTER -->
+
+    <!-- Container holding the seven image layers -->
     <div
       id="crow-character"
       aria-label="Animated crow"
       role="img"
     >
+      <!-- CROW TAIL -->
 
-      <!-- Back layers -->
+      <!-- Tail layer behind the crow's body -->
       <img
         class="crow-part crow-tail"
         src="Tail.png"
         alt=""
       >
 
+      <!-- CROW CLAW -->
+
+      <!-- Claw layer behind the crow's body -->
       <img
         class="crow-part crow-claw"
         src="Claw.png"
         alt=""
       >
 
-      <!-- Main body -->
+      <!-- CROW BODY -->
+
+      <!-- Main body layer -->
       <img
         class="crow-part crow-body"
         src="Body.png"
         alt=""
       >
 
-      <!-- Moving wing -->
+      <!-- CROW WING -->
+
+      <!-- Wing layer used for breathing animation -->
       <img
         class="crow-part crow-wing"
         src="Wing.png"
         alt=""
       >
 
-      <!-- Face -->
+      <!-- CROW BEAK -->
+
+      <!-- Beak layer on the crow's face -->
       <img
         class="crow-part crow-beak"
         src="Beak.png"
         alt=""
       >
 
+      <!-- CROW EYE -->
+
+      <!-- Eye layer on the crow's face -->
       <img
         class="crow-part crow-eye"
         src="Eye.png"
         alt=""
       >
 
-      <!-- Mouse-tracking pupil -->
+      <!-- CROW PUPIL -->
+
+      <!-- Pupil layer that follows the mouse -->
       <img
         class="crow-part crow-pupil"
         src="Pupil.png"
         alt=""
       >
-
     </div>
   </div>
 
+
   <!-- STORE MODAL -->
+
+  <!-- Dialog for viewing and purchasing collectibles -->
   <div
     id="store-modal"
     class="modal"
     aria-hidden="true"
   >
+    <!-- Store modal content -->
     <div class="modal-card store-modal-card">
 
+      <!-- Close Crow Store modal -->
       <button
         id="close-store-modal"
         class="modal-close"
@@ -1039,32 +1240,47 @@
         ✕
       </button>
 
+      <!-- Store heading -->
       <h2>Crow Store 🐦‍⬛</h2>
 
+      <!-- Store description -->
       <p class="modal-subtitle">
         Spend your tokens on accessories for the crow.
       </p>
 
+      <!-- STORE TOKEN BALANCE -->
+
+      <!-- Display the user's available coins -->
       <div class="store-token-balance">
         🪙 <span id="store-token-count">0</span> tokens
       </div>
 
+      <!-- COLLECTIBLES STORE -->
+
+      <!-- Section containing purchasable items -->
       <section class="collectibles-store-section">
+
+        <!-- Collectibles heading -->
         <h3>Crow's Treasure Shop</h3>
+
+        <!-- Collectibles description -->
         <p>
           Spend your hard-earned coins on collectibles!
         </p>
 
+        <!-- Store items inserted by JavaScript -->
         <div
           id="collectibles-store-grid"
           class="collectibles-grid"
         ></div>
       </section>
-
     </div>
   </div>
 
+
   <!-- JAVASCRIPT -->
+
+  <!-- Load the main Crowspace application logic -->
   <script src="script.js"></script>
 
 </body>
