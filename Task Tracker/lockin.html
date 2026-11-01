@@ -1,829 +1,514 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+    <!-- Character encoding -->
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <!-- Adjust page scaling for different screen sizes -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Browser tab title -->
     <title>Lock-in Session</title>
 
-
     <style>
+        /* GENERAL PAGE STYLING */
 
+        /* Apply border-box sizing to all elements */
         * {
             box-sizing: border-box;
         }
 
-
+        /* Main webpage background and text */
         body {
             margin: 0;
-
             min-height: 100vh;
-
-            font-family:
-                Arial,
-                sans-serif;
-
+            font-family: Arial, sans-serif;
             background: #111318;
-
             color: #eeeeee;
-
             overflow: hidden;
         }
 
+        /* MAIN LAYOUT */
 
-        /* =========================
-        MAIN LAYOUT
-        ========================= */
-
+        /* Divide the page into a timer and task sidebar */
         .lockin-app {
             display: grid;
-
-            grid-template-columns:
-                1fr 350px;
-
+            grid-template-columns: 1fr 350px;
             height: 100vh;
         }
 
+        /* TIMER AREA */
 
-        /* =========================
-        TIMER AREA
-        ========================= */
-
+        /* Center the timer and its related information */
         .timer-area {
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
             justify-content: center;
-
             position: relative;
         }
 
-
+        /* Small label above the timer */
         .lockin-label {
             color: #777b87;
-
             text-transform: uppercase;
-
             letter-spacing: 4px;
-
             font-size: 13px;
-
             margin-bottom: 20px;
         }
 
-
+        /* Large countdown timer */
         #timer {
-            font-size: clamp(
-                80px,
-                13vw,
-                180px
-            );
-
+            font-size: clamp(80px, 13vw, 180px);
             font-weight: bold;
-
             letter-spacing: -5px;
-
             margin: 0;
         }
 
-
+        /* Motivational message below the timer */
         #timer-message {
             margin-top: 15px;
-
             color: #888c99;
-
             font-size: 17px;
         }
 
+        /* SESSION PROGRESS BAR */
 
-        /* =========================
-        PROGRESS BAR
-        ========================= */
-
+        /* Background track showing session progress */
         .session-progress {
-            width: min(
-                500px,
-                70%
-            );
-
+            width: min(500px, 70%);
             height: 6px;
-
             background: #242730;
-
             border-radius: 20px;
-
             overflow: hidden;
-
             margin-top: 35px;
         }
 
-
+        /* Progress bar fill updated by JavaScript */
         #session-progress-fill {
             height: 100%;
-
             width: 0%;
-
             background: #eeeeee;
-
             transition: width 1s linear;
         }
 
+        /* TASK SIDEBAR */
 
-        /* =========================
-        TASK SIDEBAR
-        ========================= */
-
+        /* Sidebar containing saved tasks */
         .task-sidebar {
             height: 100vh;
-
             background: #1b1d24;
-
             border-left: 1px solid #30333d;
-
             padding: 30px;
-
             overflow-y: auto;
         }
 
-
+        /* Task sidebar heading */
         .task-sidebar h2 {
             margin-top: 0;
-
             font-size: 22px;
         }
 
-
+        /* Description beneath the heading */
         .task-sidebar-subtitle {
             color: #777b87;
-
             font-size: 13px;
-
             margin-bottom: 25px;
         }
 
-
+        /* Remove default task list styling */
         #focus-task-list {
             list-style: none;
-
             margin: 0;
-
             padding: 0;
         }
 
-
+        /* Individual task cards */
         .focus-task {
             display: flex;
-
             align-items: flex-start;
-
             gap: 12px;
-
             padding: 14px;
-
             margin-bottom: 10px;
-
             background: #242730;
-
             border: 1px solid #30333d;
-
             border-radius: 10px;
         }
 
-
+        /* Task completion checkbox */
         .focus-task input {
             width: 20px;
             height: 20px;
-
             margin-top: 1px;
-
             cursor: pointer;
         }
 
-
+        /* Task name text */
         .focus-task-text {
             flex: 1;
-
             line-height: 1.4;
         }
 
-
-        .focus-task.completed
-        .focus-task-text {
+        /* Completed task text */
+        .focus-task.completed .focus-task-text {
             text-decoration: line-through;
-
             color: #666a75;
         }
 
-
+        /* Task priority label */
         .focus-priority {
             font-size: 9px;
-
             text-transform: uppercase;
-
             color: #888c99;
         }
 
+        /* FINISHED SESSION SCREEN */
 
-        /* =========================
-        FINISHED SCREEN
-        ========================= */
-
+        /* Hidden overlay displayed when timer finishes */
         #finished-overlay {
             position: fixed;
-
             inset: 0;
-
-            background: rgba(
-                17,
-                19,
-                24,
-                0.97
-            );
-
+            background: rgba(17, 19, 24, 0.97);
             display: none;
-
             align-items: center;
             justify-content: center;
-
             text-align: center;
-
             z-index: 100;
         }
 
-
+        /* Show the finished session overlay */
         #finished-overlay.show {
             display: flex;
         }
 
-
+        /* Finished session heading */
         .finished-content h1 {
             font-size: 50px;
-
             margin-bottom: 10px;
         }
 
-
+        /* Finished session description */
         .finished-content p {
             color: #888c99;
-
             font-size: 18px;
         }
 
-
+        /* Finish Session button */
         .finished-content button {
             margin-top: 25px;
-
             padding: 14px 25px;
-
             border: none;
-
             border-radius: 10px;
-
             background: #eeeeee;
-
             color: #111318;
-
             font-weight: bold;
-
             cursor: pointer;
         }
 
+        /* RESPONSIVE LAYOUT */
 
-        /* =========================
-        MOBILE
-        ========================= */
-
-        @media (
-            max-width: 800px
-        ) {
-
+        /* Stack timer and sidebar on smaller screens */
+        @media (max-width: 800px) {
+            /* Allow scrolling */
             body {
                 overflow: auto;
             }
 
-
+            /* Single-column layout */
             .lockin-app {
-                grid-template-columns:
-                    1fr;
-
+                grid-template-columns: 1fr;
                 height: auto;
-
                 min-height: 100vh;
             }
 
-
+            /* Timer area height */
             .timer-area {
                 min-height: 60vh;
             }
 
-
+            /* Move task sidebar below timer */
             .task-sidebar {
                 height: auto;
-
                 min-height: 40vh;
-
                 border-left: none;
-
-                border-top:
-                    1px solid #30333d;
+                border-top: 1px solid #30333d;
             }
-
         }
-
     </style>
-
 </head>
 
-
 <body>
+    <!-- MAIN LOCK-IN INTERFACE -->
 
-
+    <!-- Container for timer and task sidebar -->
     <main class="lockin-app">
 
-
-        <!-- =========================
-            TIMER
-        ========================= -->
-
+        <!-- TIMER DISPLAY -->
         <section class="timer-area">
+            <!-- Focus session label -->
+            <div class="lockin-label">Lock-in Session</div>
 
-            <div class="lockin-label">
-                Lock-in Session
-            </div>
+            <!-- Countdown updated by JavaScript -->
+            <div id="timer">00:00</div>
 
-            <div id="timer">
-                00:00
-            </div>
+            <!-- Motivational message -->
+            <p id="timer-message">Stay focused.</p>
 
-            <p id="timer-message">
-                Stay focused.
-            </p>
-
+            <!-- Session progress bar -->
             <div class="session-progress">
-
-                <div
-                    id="session-progress-fill"
-                ></div>
-
+                <!-- Filled portion updated by JavaScript -->
+                <div id="session-progress-fill"></div>
             </div>
-
         </section>
 
-
-        <!-- =========================
-            TASKS
-        ========================= -->
-
+        <!-- TASK SIDEBAR -->
         <aside class="task-sidebar">
+            <!-- Sidebar heading -->
+            <h2>Today's Tasks</h2>
 
-            <h2>
-                Today's Tasks
-            </h2>
-
+            <!-- Sidebar description -->
             <p class="task-sidebar-subtitle">
                 No distractions. Just the work.
             </p>
 
+            <!-- Saved tasks are inserted here -->
             <ul id="focus-task-list"></ul>
-
         </aside>
-
-
     </main>
 
-
-    <!-- =========================
-        FINISHED
-    ========================= -->
-
+    <!-- FINISHED SESSION OVERLAY -->
     <div id="finished-overlay">
-
         <div class="finished-content">
+            <!-- Completion heading -->
+            <h1>Session Complete. 💪</h1>
 
-            <h1>
-                Session Complete. 💪
-            </h1>
+            <!-- Completion description -->
+            <p>The crow acknowledges your effort.</p>
 
-            <p>
-                The crow acknowledges your effort.
-            </p>
-
-            <button
-                id="close-session"
-                type="button"
-            >
+            <!-- Button for closing the session window -->
+            <button id="close-session" type="button">
                 Finish Session
             </button>
-
         </div>
-
     </div>
 
-
     <script>
-
-        // =========================
         // SESSION DATA
-        // =========================
 
+        //Read the selected duration from localStorage
+        //Use 25 minutes if no valid duration is saved
         const durationMinutes =
-            Number(
-                localStorage.getItem(
-                    "lockinDuration"
-                )
-            ) || 25;
+            Number(localStorage.getItem("lockinDuration")) || 25;
 
+        //Convert the duration to seconds
+        const totalSeconds = durationMinutes * 60;
 
-        const totalSeconds =
-            durationMinutes * 60;
+        //Store the current remaining time
+        let remainingSeconds = totalSeconds;
 
+        // HTML ELEMENT REFERENCES
 
-        let remainingSeconds =
-            totalSeconds;
+        //Find the countdown timer
+        const timerDisplay = document.getElementById("timer");
 
+        //Find the progress bar fill
+        const progressFill = document.getElementById("session-progress-fill");
 
-        // =========================
-        // ELEMENTS
-        // =========================
+        //Find the sidebar task list
+        const focusTaskList = document.getElementById("focus-task-list");
 
-        const timerDisplay =
-            document.getElementById(
-                "timer"
-            );
+        //Find the finished session overlay
+        const finishedOverlay = document.getElementById("finished-overlay");
 
+        //Find the button that closes the session
+        const closeSession = document.getElementById("close-session");
 
-        const progressFill =
-            document.getElementById(
-                "session-progress-fill"
-            );
+        // LOAD SAVED TASKS
 
-
-        const focusTaskList =
-            document.getElementById(
-                "focus-task-list"
-            );
-
-
-        const finishedOverlay =
-            document.getElementById(
-                "finished-overlay"
-            );
-
-
-        const closeSession =
-            document.getElementById(
-                "close-session"
-            );
-
-
-        // =========================
-        // TASKS
-        // =========================
-
+        //Create an empty task array
         let tasks = [];
 
-
+        //Try to load previously saved tasks
         try {
+            //Convert saved JSON text into JavaScript data
+            const savedTasks = JSON.parse(localStorage.getItem("crowTasks"));
 
-            const savedTasks =
-                JSON.parse(
-                    localStorage.getItem(
-                        "crowTasks"
-                    )
-                );
-
-
-            if (
-                Array.isArray(
-                    savedTasks
-                )
-            ) {
-
+            //Only use the saved data if it is an array
+            if (Array.isArray(savedTasks)) {
                 tasks = savedTasks;
-
             }
-
-        }
-
-        catch (error) {
-
+        } catch (error) {
+            //Use an empty array if the saved data is invalid
             tasks = [];
-
         }
 
-
-        // =========================
         // SAVE TASKS
-        // =========================
 
+        //Function for saving changes to the task list
         function saveTasks() {
-
-            localStorage.setItem(
-                "crowTasks",
-                JSON.stringify(tasks)
-            );
-
+            //Convert tasks to JSON and save them
+            localStorage.setItem("crowTasks", JSON.stringify(tasks));
         }
 
-
-        // =========================
         // RENDER TASKS
-        // =========================
 
+        //Function for displaying saved tasks in the sidebar
         function renderTasks() {
-
+            //Clear the previous task list
             focusTaskList.innerHTML = "";
 
-
+            //Show a message if there are no tasks
             if (tasks.length === 0) {
+                //Create the empty-state message
+                const message = document.createElement("p");
 
-                const message =
-                    document.createElement(
-                        "p"
-                    );
+                //Set its text and color
+                message.textContent = "No tasks yet.";
+                message.style.color = "#777b87";
 
-
-                message.textContent =
-                    "No tasks yet.";
-
-
-                message.style.color =
-                    "#777b87";
-
-
-                focusTaskList.appendChild(
-                    message
-                );
-
-
+                //Display the message
+                focusTaskList.appendChild(message);
                 return;
-
             }
 
+            //Create a card for every saved task
+            tasks.forEach(function (task) {
+                //Create a list item for the task
+                const li = document.createElement("li");
+                li.className = "focus-task";
 
-            tasks.forEach(
-                function (task) {
-
-
-                    const li =
-                        document.createElement(
-                            "li"
-                        );
-
-
-                    li.className =
-                        "focus-task";
-
-
-                    if (task.completed) {
-
-                        li.classList.add(
-                            "completed"
-                        );
-
-                    }
-
-
-                    // Checkbox
-
-                    const checkbox =
-                        document.createElement(
-                            "input"
-                        );
-
-
-                    checkbox.type =
-                        "checkbox";
-
-
-                    checkbox.checked =
-                        task.completed;
-
-
-                    checkbox.addEventListener(
-                        "change",
-                        function () {
-
-                            task.completed =
-                                checkbox.checked;
-
-
-                            saveTasks();
-
-                            renderTasks();
-
-                        }
-                    );
-
-
-                    // Text container
-
-                    const textArea =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    textArea.style.flex =
-                        "1";
-
-
-                    // Task text
-
-                    const text =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    text.className =
-                        "focus-task-text";
-
-
-                    text.textContent =
-                        task.text;
-
-
-                    // Priority
-
-                    const priority =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    priority.className =
-                        "focus-priority";
-
-
-                    priority.textContent =
-                        task.priority ||
-                        "medium";
-
-
-                    textArea.appendChild(
-                        text
-                    );
-
-
-                    textArea.appendChild(
-                        priority
-                    );
-
-
-                    li.appendChild(
-                        checkbox
-                    );
-
-
-                    li.appendChild(
-                        textArea
-                    );
-
-
-                    focusTaskList.appendChild(
-                        li
-                    );
-
+                //Apply completed styling when appropriate
+                if (task.completed) {
+                    li.classList.add("completed");
                 }
-            );
 
+                // TASK CHECKBOX
+
+                //Create the task completion checkbox
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = task.completed;
+
+                //Listen for changes to the checkbox
+                checkbox.addEventListener("change", function () {
+                    //Update the task's completed state
+                    task.completed = checkbox.checked;
+
+                    //Save changes and refresh the list
+                    saveTasks();
+                    renderTasks();
+                });
+
+                // TASK INFORMATION
+
+                //Create a container for task name and priority
+                const textArea = document.createElement("div");
+                textArea.style.flex = "1";
+
+                //Create the task name element
+                const text = document.createElement("div");
+                text.className = "focus-task-text";
+                text.textContent = task.text;
+
+                //Create the task priority label
+                const priority = document.createElement("div");
+                priority.className = "focus-priority";
+
+                //Display the priority or use medium by default
+                priority.textContent = task.priority || "medium";
+
+                // ASSEMBLE TASK CARD
+
+                //Add task name and priority to the text container
+                textArea.appendChild(text);
+                textArea.appendChild(priority);
+
+                //Add checkbox and text container to the task
+                li.appendChild(checkbox);
+                li.appendChild(textArea);
+
+                //Display the task in the sidebar
+                focusTaskList.appendChild(li);
+            });
         }
 
-
-        // =========================
         // FORMAT TIME
-        // =========================
 
+        //Convert seconds into MM:SS format
         function formatTime(seconds) {
+            //Calculate full minutes
+            const minutes = Math.floor(seconds / 60);
 
-            const minutes =
-                Math.floor(
-                    seconds / 60
-                );
+            //Calculate the remaining seconds
+            const secs = seconds % 60;
 
-
-            const secs =
-                seconds % 60;
-
-
+            //Add leading zeroes and combine values
             return (
-                String(minutes)
-                    .padStart(2, "0")
-                +
-                ":"
-                +
-                String(secs)
-                    .padStart(2, "0")
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(secs).padStart(2, "0")
             );
-
         }
 
-
-        // =========================
         // UPDATE TIMER
-        // =========================
 
+        //Refresh the countdown and session progress bar
         function updateTimer() {
+            //Display the formatted remaining time
+            timerDisplay.textContent = formatTime(remainingSeconds);
 
-            timerDisplay.textContent =
-                formatTime(
-                    remainingSeconds
-                );
+            //Calculate elapsed time
+            const completed = totalSeconds - remainingSeconds;
 
+            //Convert elapsed time into a percentage
+            const progress = (completed / totalSeconds) * 100;
 
-            const completed =
-                totalSeconds -
-                remainingSeconds;
-
-
-            const progress =
-                (
-                    completed /
-                    totalSeconds
-                ) * 100;
-
-
-            progressFill.style.width =
-                progress + "%";
-
+            //Update the filled width of the progress bar
+            progressFill.style.width = progress + "%";
         }
 
+        // COUNTDOWN TIMER
 
-        // =========================
-        // TIMER
-        // =========================
+        //Run the countdown once every second
+        const sessionTimer = setInterval(function () {
+            //Subtract one second
+            remainingSeconds--;
 
-        const sessionTimer =
-            setInterval(
-                function () {
+            //Update countdown and progress
+            updateTimer();
 
+            //Check whether time has run out
+            if (remainingSeconds <= 0) {
+                //Stop the timer
+                clearInterval(sessionTimer);
 
-                    remainingSeconds--;
+                //Set the remaining time to zero
+                remainingSeconds = 0;
 
+                //Update the final display
+                updateTimer();
 
-                    updateTimer();
-
-
-                    if (
-                        remainingSeconds <= 0
-                    ) {
-
-                        clearInterval(
-                            sessionTimer
-                        );
-
-
-                        remainingSeconds = 0;
-
-                        updateTimer();
-
-
-                        finishedOverlay.classList.add(
-                            "show"
-                        );
-
-                    }
-
-                },
-                1000
-            );
-
-
-        // =========================
-        // CLOSE SESSION
-        // =========================
-
-        closeSession.addEventListener(
-            "click",
-            function () {
-
-                window.close();
-
+                //Show the completed session screen
+                finishedOverlay.classList.add("show");
             }
-        );
+        }, 1000);
 
+        // CLOSE SESSION
 
-        // =========================
-        // START
-        // =========================
+        //Close the focus window when the button is clicked
+        closeSession.addEventListener("click", function () {
+            window.close();
+        });
 
+        // INITIALIZE SESSION
+
+        //Display saved tasks
         renderTasks();
 
+        //Display the initial countdown
         updateTimer();
-
     </script>
-
-
 </body>
-
 </html>
