@@ -1,2 +1,2 @@
 # Task-Manager
-Manages tasks
+A task manager that manages tasks, important dates, and classes. This is for people who struggle with procrastination and other forms of task management, such as Google Calendar or a journal. This also includes a lock-in session, which is basically a study session for when you need to focus for an extended period of time on work. Last but not least, it includes a coin system, which is to incentivize people to complete tasks so they can buy things from the store.
