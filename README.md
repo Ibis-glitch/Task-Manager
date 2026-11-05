@@ -13,4 +13,4 @@ Later updates:
 Updating the store to include accessories so that the items have more of an incentive to buy.
 
 Motivation: 
-I created this out of the need to finally stop procrastinating. This can be used by anybody else who struggles with procrastination, and other forms of task management tools do not work.
+I created this out of the need to finally stop procrastinating. And also because I needed to create my first long-term project. 
